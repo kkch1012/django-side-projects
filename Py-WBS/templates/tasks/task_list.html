@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>작업 목록</h2>
+
+<form method="get">
+  <select name="project" onchange="this.form.submit()">
+    <option value="">-- 프로젝트 선택 --</option>
+    {% for p in projects %}
+      <option value="{{ p.id }}" {% if p.id|stringformat:"s" == selected_project_id %}selected{% endif %}>{{ p.name }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<hr>
+
+<table>
+  <thead>
+    <tr>
+      <th>프로젝트</th><th>작업명</th><th>기간</th><th>상태</th><th>우선순위</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for task in tasks %}
+    <tr>
+      <td>{{ task.project.name }}</td>
+      <td>{{ task.title }}</td>
+      <td>{{ task.start_date }} ~ {{ task.end_date }}</td>
+      <td>{{ task.get_status_display }}</td>
+      <td>{{ task.get_priority_display }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">작업이 없습니다.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'task_create' %}" class="button">+ 작업 추가</a>
+{% endblock %}

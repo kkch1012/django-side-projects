@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/task_form.css' %}">
+
+<h2>작업 추가</h2>
+<form method="post" class="task-form">
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="project">프로젝트</label>
+    <select name="project" id="project" required>
+      {% for p in projects %}
+        <option value="{{ p.id }}">{{ p.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="title">작업명</label>
+    <input type="text" name="title" id="title" required>
+  </div>
+
+  <div class="form-group">
+    <label for="description">작업 내용</label>
+    <textarea name="description" id="description" rows="4"></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="start_date">시작일</label>
+      <input type="date" name="start_date" id="start_date" required>
+    </div>
+    <div class="form-group">
+      <label for="end_date">마감일</label>
+      <input type="date" name="end_date" id="end_date" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="status">상태</label>
+      <select name="status" id="status">
+        <option value="todo">미완료</option>
+        <option value="doing">진행중</option>
+        <option value="done">완료</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="priority">우선순위</label>
+      <select name="priority" id="priority">
+        <option value="high">상</option>
+        <option value="medium" selected>중</option>
+        <option value="low">하</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">저장</button>
+    <a href="{% url 'task_list' %}" class="btn">← 목록</a>
+  </div>
+</form>
+{% endblock %}

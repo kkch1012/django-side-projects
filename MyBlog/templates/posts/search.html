@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}검색 결과{% endblock %}
+
+{% block content %}
+<h2>게시글 검색</h2>
+
+<form method="get" action="{% url 'posts:search' %}" style="margin-bottom: 1rem;">
+  <input type="text" name="q" placeholder="검색어 입력" value="{{ request.GET.q }}">
+  <button type="submit">검색</button>
+</form>
+
+{% if posts %}
+  {% for post in posts %}
+    <div style="margin-bottom: 1rem; padding: 1rem; border: 1px solid #ccc;">
+      <h3><a href="{% url 'posts:detail' post.id %}">{{ post.title }}</a></h3>
+      <p>{{ post.content|truncatechars:100 }}</p>
+    </div>
+  {% endfor %}
+{% else %}
+  <p>검색 결과가 없습니다.</p>
+{% endif %}
+{% endblock %}

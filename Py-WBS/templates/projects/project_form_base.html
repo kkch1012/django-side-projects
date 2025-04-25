@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/project_form.css' %}">
+
+<form method="POST" action="" style="max-width: 600px;">
+  {% csrf_token %}
+
+  <label for="name">프로젝트명</label>
+  <input type="text" name="name" id="name" value="{{ project.name }}" required>
+
+  <label for="manager">담당자</label>
+  <input type="text" name="manager" id="manager" value="{{ project.manager }}" required>
+
+  <label for="department">부서명</label>
+  <input type="text" name="department" id="department" value="{{ project.department }}" required>
+
+  <label for="position">직위</label>
+  <input type="text" name="position" id="position" value="{{ project.position }}" required>
+
+  <label for="start_date">시작일</label>
+  <input type="date" name="start_date" id="start_date" value="{{ project.start_date|date:'Y-m-d' }}" required>
+
+  <label for="end_date">종료일</label>
+  <input type="date" name="end_date" id="end_date" value="{{ project.end_date|date:'Y-m-d' }}" required>
+
+  <label for="status">상태</label>
+<select name="status" id="status">
+  {% for s in status_choices %}
+    <option value="{{ s }}" {% if project.status == s %}selected{% endif %}>{{ s }}</option>
+  {% empty %}
+    <option value="요청" selected>요청</option>
+  {% endfor %}
+</select>
+
+  <div class="form-buttons">
+  <button class="button" type="submit">{{ button_label }}</button>
+  {% if project and project.pk %}
+    <a href="{% url 'project_detail' project.pk %}" class="button">← 돌아가기</a>
+  {% else %}
+    <a href="{% url 'project_list' %}" class="button">← 목록으로 돌아가기</a>
+  {% endif %}
+</div>
+
+</form>
+{% endblock %}

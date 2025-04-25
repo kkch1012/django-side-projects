@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/report_list.css' %}">
+
+<h2>업무 현황</h2>
+
+<div class="top-bar">
+  <form method="get" class="filter-form">
+    <label>프로젝트</label>
+    <select name="project">
+    <option value="">전체</option>
+    {% for project in projects %}
+    <option value="{{ project.id }}" {% if project.id|stringformat:"s" == selected_project_id %}selected{% endif %}>{{ project.name }}</option>
+  {% endfor %}
+</select>
+
+    <label>날짜</label>
+  <input type="date" name="date" id="dateInput" value="{{ selected_date|default:today }}">
+  <button type="button" class="btn btn-secondary" onclick="document.getElementById('dateInput').value='';">전체</button>
+
+    <button type="submit" class="btn">조회</button>
+  </form>
+
+  <a href="{% url 'report_create' %}" class="btn btn-primary add-btn">+ 업무 추가</a>
+</div>
+
+<hr>
+
+{% if reports %}
+  <h3>금일 업무 결과</h3>
+  <div class="report-header">
+    <div>프로젝트</div>
+    <div>업무 내용</div>
+    <div>완료기한 / 진행률</div>
+    <div>구분</div>
+    <div>작업</div>
+  </div>
+
+  {% for report in reports %}
+    {% if report.today_result %}
+      <div class="report-row">
+        <div>{{ report.project.name }}</div>
+        <div>{{ report.today_result }}</div>
+        <div>{{ report.project.end_date }} / {{ report.project.progress_rate }}%</div>
+        <div>금일 업무 결과</div>
+        <div class="button-group">
+          <a href="{% url 'report_edit' report.id %}" class="btn btn-primary">✏️</a>
+          <a href="{% url 'report_delete' report.id %}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?')">🗑</a>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <hr>
+
+  <h3>익일 업무 예정</h3>
+  <div class="report-header">
+    <div>프로젝트</div>
+    <div>업무 내용</div>
+    <div>완료기한 / 진행률</div>
+    <div>구분</div>
+    <div>작업</div>
+  </div>
+
+  {% for report in reports %}
+    {% if report.tomorrow_plan %}
+      <div class="report-row">
+        <div>{{ report.project.name }}</div>
+        <div>{{ report.tomorrow_plan }}</div>
+        <div>{{ report.project.end_date }} / {{ report.project.progress_rate }}%</div>
+        <div>익일 업무 예정</div>
+        <div class="button-group">
+          <a href="{% url 'report_edit' report.id %}" class="btn btn-primary">✏️</a>
+          <a href="{% url 'report_delete' report.id %}" class="btn btn-danger" onclick="return confirm('정말 삭제하시겠습니까?')">🗑</a>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+{% else %}
+  <p>해당 조건의 보고서가 없습니다.</p>
+{% endif %}
+
+{% endblock %}

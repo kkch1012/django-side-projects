@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}MyBlog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+<body>
+  <header style="background: #fff; padding: 1rem; border-bottom: 1px solid #ccc;">
+    <nav style="display: flex; justify-content: space-between; align-items: center;">
+      <div><strong>김찬호</strong> Django</div>
+      <div>
+        <a href="/">Home</a>
+        <a href="/posts/">Blog</a>
+        <a href="/profile/">Avatar</a>
+        <a href="/posts/mine/">About Me</a>
+        <a href="/search/">Board</a>
+      </div>
+      <div>
+        {% if user.is_authenticated %}
+          <span style="background: #eee; padding: 5px 10px; border-radius: 10px;">
+            {{ user.username }}
+          </span>
+        {% else %}
+          <a href="/users/login/">Login</a>
+        {% endif %}
+      </div>
+    </nav>
+  </header>
+
+  <main class="container" style="padding: 2rem;">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer style="background: #333; color: white; text-align: center; padding: 1rem;">
+    <p>열심히 해보겠습니다.</p>
+  </footer>
+</body>
+</html>

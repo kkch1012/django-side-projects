@@ -1,0 +1,114 @@
+/* 보고서 목록 테이블 구조 */
+.report-header, .report-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr 2fr 1.5fr 2fr;
+  gap: 10px;
+  padding: 10px;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
+
+.report-header {
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.report-row:nth-child(even) {
+  background-color: #fafafa;
+}
+
+/* 상단 조회 영역 & 업무 추가 버튼 */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.filter-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.add-btn {
+  height: 38px;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background-color: #45a049;
+}
+
+/* 버튼 공통 */
+.btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* 수정 버튼 (파란색) */
+.btn-primary {
+  background-color: #2196F3;
+}
+
+.btn-primary:hover {
+  background-color: #1976D2;
+}
+
+/* 삭제 버튼 (빨간색) */
+.btn-danger {
+  background-color: #e53935;
+}
+
+.btn-danger:hover {
+  background-color: #c62828;
+}
+
+/* 섹션 제목 */
+h3 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.btn-secondary {
+  background-color: #9e9e9e;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: #7e7e7e;
+}

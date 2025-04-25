@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/report_create.css' %}">
+<h2>업무 추가</h2>
+<form method="POST" class="form-vertical">
+  {% csrf_token %}
+  <label>프로젝트</label>
+  <select name="project" required>
+    {% for project in projects %}
+      <option value="{{ project.id }}">{{ project.name }}</option>
+    {% endfor %}
+  </select>
+  <label>날짜</label>
+  <input type="date" name="date_created" value="{{ today }}" required>
+  <label>업무 구분</label>
+  <select name="work_type" required>
+    <option value="today">금일 업무 결과</option>
+    <option value="tomorrow">익일 업무 예정</option>
+  </select>
+  <label>내용</label>
+  <textarea name="content" rows="4" required></textarea>
+  <button type="submit" class="btn">저장</button>
+</form>
+{% endblock %}

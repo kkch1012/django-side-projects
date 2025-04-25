@@ -1,0 +1,7 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/project_form.css' %}">
+<h2>프로젝트 수정</h2>
+
+{% include "projects/project_form_base.html" with project=project button_label="저장하기" %}
+{% endblock %}

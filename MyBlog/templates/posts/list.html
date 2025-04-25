@@ -1,0 +1,21 @@
+<!-- templates/posts/list.html -->
+{% extends "base.html" %}
+
+{% block title %}게시글 목록{% endblock %}
+
+{% block content %}
+  <h2>게시글 목록</h2>
+  {% for post in posts %}
+    <div>
+      <h3>
+        <a href="{% url 'posts:detail' post.id %}">{{ post.title }}</a>
+        {% if user.role == "admin" %}
+          <a href="{% url 'posts:delete' post.id %}" style="color: red; font-size: 0.8em;">🗑 삭제</a>
+        {% endif %}
+      </h3>
+      <p>{{ post.content|truncatechars:100 }}</p>
+    </div>
+  {% empty %}
+    <p>작성된 게시글이 없습니다.</p>
+  {% endfor %}
+{% endblock %}

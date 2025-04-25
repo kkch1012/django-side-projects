@@ -1,0 +1,48 @@
+{% load static %}
+<form method="POST" action="{% block form_action %}{% endblock %}" style="max-width: 600px;">
+  {% csrf_token %}
+  
+  <label for="project">프로젝트 선택</label>
+  <select name="project" id="project" onchange="showProjectDetails(this)">
+    <option value="">-- 프로젝트 선택 --</option>
+    {% for project in projects %}
+      <option value="{{ project.id }}" {% if project.id == project_id %}selected{% endif %}>{{ project.name }}</option>
+    {% endfor %}
+  </select>
+
+  <div id="project-details" style="display:none;">
+    <p><strong>완료 기한:</strong> <span id="end_date"></span></p>
+    <p><strong>진행률:</strong> <span id="progress_rate"></span></p>
+  </div>
+
+  <label for="description">업무 내용</label>
+  <textarea name="description" id="description" rows="4" placeholder="업무 내용을 입력하세요.">{{ description }}</textarea>
+
+  <label for="today_result">금일 업무 결과</label>
+  <textarea name="today_result" id="today_result" rows="4" placeholder="금일 업무 결과를 입력하세요.">{{ today_result }}</textarea>
+
+  <label for="tomorrow_plan">익일 업무 예정</label>
+  <textarea name="tomorrow_plan" id="tomorrow_plan" rows="4" placeholder="익일 업무 예정 내용을 입력하세요.">{{ tomorrow_plan }}</textarea>
+
+  <div class="form-buttons">
+    <button class="button" type="submit">{{ button_label }}</button>
+    <a href="{% block return_url %}{% endblock %}" class="button">← 돌아가기</a>
+  </div>
+</form>
+
+<script>
+  function showProjectDetails(selectElement) {
+    const projectId = selectElement.value;
+    if (projectId) {
+      fetch(`/get_project_details/${projectId}/`)
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('end_date').innerText = data.end_date;
+          document.getElementById('progress_rate').innerText = data.progress_rate + '%';
+          document.getElementById('project-details').style.display = 'block';
+        });
+    } else {
+      document.getElementById('project-details').style.display = 'none';
+    }
+  }
+</script>

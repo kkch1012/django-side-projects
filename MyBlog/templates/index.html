@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}홈{% endblock %}
+
+{% block content %}
+<div style="
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+  background: url('{% static "images/bg.jpg" %}') no-repeat center center;
+  background-size: cover;
+  color: white;
+  height: 70vh;
+">
+  <!-- 왼쪽 소개 영역 -->
+  <div style="width: 45%;">
+    <h1 style="font-size: 2.5rem;">김찬호 <strong>Django</strong></h1>
+    <p>
+      파이썬 진영의 가장 대표적인 웹 프레임워크 중 하나인 Django를 이용하여 <br>
+      여러분만의 블로그 사이트를 만들어보세요.
+    </p>
+  </div>
+
+  <!-- 오른쪽 최근 글 영역 -->
+  <div style="width: 45%;">
+    <h2 style="border-bottom: 2px solid white;">Blog - Recent posts</h2>
+    {% for post in posts %}
+      <div style="
+        background: rgba(255,255,255,0.8);
+        margin: 1rem 0;
+        padding: 1rem;
+        border-radius: 10px;
+        color: black;
+      ">
+        <strong>{{ post.title }}</strong><br>
+        <small>{{ post.user.username }} · {{ post.created_at|date:"M d, Y, g:i a" }}</small>
+      </div>
+    {% empty %}
+      <p>아직 게시글이 없습니다.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

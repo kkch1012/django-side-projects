@@ -1,0 +1,43 @@
+.form-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.form-vertical label {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.form-vertical input[type="date"],
+.form-vertical select,
+.form-vertical textarea {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-vertical textarea {
+  resize: vertical;
+}
+
+.form-vertical .btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 16px;
+}
+
+.form-vertical .btn:hover {
+  background-color: #45a049;
+}

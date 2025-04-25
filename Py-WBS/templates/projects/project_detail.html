@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ project.name }}</h2>
+
+  <p><strong>담당자:</strong> {{ project.manager }}</p>
+  <p><strong>부서:</strong> {{ project.department }}</p>
+  <p><strong>직위:</strong> {{ project.position }}</p>
+  <p><strong>상태:</strong> {{ project.status }}</p>
+  <p><strong>기간:</strong> {{ project.start_date }} ~ {{ project.end_date }}</p>
+  <p><strong>전체일수:</strong> {{ project.total_days }}일</p>
+  <p><strong>영업일수:</strong> {{ project.working_days }}일</p>
+
+  <a href="{% url 'project_list' %}" class="button">← 목록으로 돌아가기</a>
+  <a href="{% url 'project_edit' project.pk %}" class="button">✏ 수정하기</a>
+  <form id="delete-form" action="{% url 'project_delete' project.pk %}" method="POST" style="display: none;">
+  {% csrf_token %}
+  <button type="submit" class="button" style="background-color: red;">삭제</button>
+  </form>
+
+<button type="button" class="button" style="background-color: red;" onclick="confirmDelete()">삭제</button>
+
+<script>
+  function confirmDelete() {
+    // 확인 창 표시
+    var confirmAction = confirm("정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
+    if (confirmAction) {
+      // 확인을 클릭하면 폼을 제출
+      document.getElementById('delete-form').submit();
+    }
+  }
+</script>
+
+{% endblock %}

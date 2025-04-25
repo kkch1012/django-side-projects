@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/project_card.css' %}">
+
+<div class="project-list-header">
+  <h2>프로젝트 목록</h2>
+  <div class="project-header-controls">
+    <a href="{% url 'project_create' %}" class="btn btn-primary">+ 프로젝트 입력</a>
+    <div class="status-summary-inline">
+      <span class="tag total">전체: {{ total_projects }}</span>
+      <span class="tag request">요청: {{ status_counts.요청|default:0 }}</span>
+      <span class="tag wait">대기: {{ status_counts.대기|default:0 }}</span>
+      <span class="tag progress">진행: {{ status_counts.진행|default:0 }}</span>
+      <span class="tag feedback">피드백: {{ status_counts.피드백|default:0 }}</span>
+      <span class="tag done">완료: {{ status_counts.완료|default:0 }}</span>
+      <span class="tag hold">보류: {{ status_counts.보류|default:0 }}</span>
+    </div>
+  </div>
+</div>
+<div class="project-cards">
+  {% for p in projects %}
+  <div class="project-card">
+    <div class="project-header">
+      <div class="project-number">No. {{ forloop.counter }}</div>
+      <div class="project-status status-{{ p.status }}">{{ p.status }}</div>
+    </div>
+
+    <div class="project-body">
+      <h3 class="project-name">
+        <a href="{% url 'project_detail' p.pk %}">{{ p.name }}</a>
+      </h3>
+      <p class="project-manager">
+        Manager: {{ p.department }} {{ p.position }} {{ p.manager }}
+      </p>
+      <p class="project-dates">
+        {{ p.start_date }} ~ {{ p.end_date }}<br>
+        전체일수: {{ p.total_days }}일 / 영업일수: {{ p.working_days }}일
+      </p>
+    </div>
+
+      <div class="progress-bars">
+        <label>진행률</label>
+        <div class="bar">
+          <div class="fill" style="width: {{ p.progress_rate }}%"></div>
+        </div>
+        <label>경과율</label>
+        <div class="bar">
+          <div class="fill" style="width: {{ p.calculate_elapsed_percentage }}%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>등록된 프로젝트가 없습니다.</p>
+  {% endfor %}
+</div>
+{% endblock %}
