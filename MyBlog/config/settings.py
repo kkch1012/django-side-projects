@@ -20,6 +20,7 @@ AUTH_USER_MODEL = "users.User"
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = BASE_DIR / "templates"
 
+LOGIN_URL = '/login/'
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
